@@ -6,7 +6,7 @@
     function Danmu(obj){
 		obj=obj||{};
 		this.elem=obj.elem||null;
-		this.clear=[];
+		this.clears={indexs:[],timer:[]};
 		this.index=obj.index||0;
 		this.newIndex=obj.newIndex||0;
 		this.time=obj.time||16;
@@ -32,9 +32,19 @@
         return $(dl);
     }
 
-    //为元素添加偏移量,运行完毕后清除该元素
-    function addAnimate($target, cssObject, t) {
-        setTimeout(function () {
+    //获取可用的数组元素的索引
+	function getIndex(a){
+		var l;
+		if(a.indexs.length>0){
+			l=a.indexs.shift();
+		}else{
+			l=a.timer.length;
+		}
+		return l;
+	}
+	//为元素添加偏移量,运行完毕后清除该元素
+    function addAnimate($target, cssObject, t,a) {//参数a为数组集合是弹幕实例中的属性clears
+		setTimeout(function () {
 			$target.css(cssObject);
 			setTimeout(function () {
 				$target.remove();
@@ -56,15 +66,16 @@
 			var $target = assignMessage($(elem), data.data[data.index++]);
 			var w=$target.width()+data.spacing;
 			var t = getTimes(w,data);
-			var l=data.clear.length;
+			var a=data.clears;
+			var l=getIndex(a);
 			addAnimate($target, {
 				'-webkit-transform': 'translate(' + (-data.displacement - w) + 'px)',
 				'-webkit-transition-duration': t - data.parallax + 's',
 				'transform': 'translate(' + (-data.displacement - w) + 'px)',
 				'transition-duration': t - data.parallax + 's'
-			}, (t - data.parallax) * 1000);
-			data.clear[l]=setTimeout(function () {
-				data.clear.splice(l,1);
+			}, (t - data.parallax) * 1000,a);
+			a.timer[l]=setTimeout(function () {
+				a.indexs.push(l);
 				addDanmu(data,elem);
 			}, 1000 * (t - data.parallax) * w / (data.displacement + w));
 		}
@@ -101,13 +112,16 @@
 		return this.each(function(index,elem){
 			var $elem=$(elem);
 			var data=$elem.data('blz-danmu');
+			var a=data.clears;
 			if(data.isOpen===true){return false;}
 			data.isOpen=true;
-			$elem.find('li').html('');
-			data.clear.forEach(function(a){
-				clearTimeout(a);
+			a.indexs=[];
+			//$elem.find('dl').css({'opacity':0,'z-index':-1});
+			$elem.find('li').empty();
+			a.timer.forEach(function(b){
+				a.indexs[a.indexs.length]=a.indexs.length;
+				clearTimeout(b);
 			});
-			data.clear=[];
 		});
 	};
 }(window.Zepto||window.jQuery);
