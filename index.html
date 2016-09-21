@@ -1,8 +1,8 @@
 <!doctype html>
-<html>
+<html style="height:100%;">
 <head>
 <meta charset="utf-8">
-<title>无标题文档</title>
+<title>祝陶紫同学生日快乐</title>
 <link rel="stylesheet" href="css/blz-danmu.css">
 <style>
 	.blz-control {
@@ -11,22 +11,27 @@
 		left:0;
 		width:100%;
 		text-align:center;
-	}	
+	}
+    body {
+        background:url(images/bk.jpg) no-repeat;
+        background-size:cover;
+        background-color:#f75d69;
+    }	
 </style>
 </head>
 
-<body>
+<body style="height:100%;">
 <ul class="blz-danmu" data-blz-danmu>
     <li></li>
     <li></li>
     <li></li>
     <li></li>
 </ul>
-<div class="blz-control">
+<!--<div class="blz-control">
 <button onclick="$('.blz-danmu').danmuOpen()">open</button>
 <button onclick="$('.blz-danmu').danmuClose()">close</button>
 <button data-blz-send>send</button>
-</div>
+</div>-->
 <script src="js/zepto.js"></script>
 <script src="js/blz-danmu.js"></script>
 <script>
@@ -45,27 +50,33 @@ $(document).on('click','[data-blz-send]',sendWish);
 +function($){
 	var data={
 			name:'李小龙',
-			words:'执子之手，方知子丑，泪流满面，子不走我走',
+			words:'祝陶紫同学生日快乐！',
 			url:'images/3.jpg'
 		};
 	var data1={
 			name:'章子怡',
-			words:'老娘法眼一开就知道你是我的菜了，哈哈哈哈哈！！！',
+			words:'祝陶紫同学生日快乐，哈哈哈哈哈！！！',
 			url:'images/2.jpg'
 		};
 	var data2={
 			name:'范冰冰',
-			words:'爽快的交出存折的密码，顺利的收藏好初恋的情书，用结婚的壮举给所有，单身汉带来最大的鼓舞！',
+			words:'祝陶紫同学生日快乐！',
 			url:'images/1.jpg'
 		};
-	var data3={
-			name:'章子怡',
-			words:'爽！',
-			url:'images/2.jpg'
-		};			
+	var data4={
+			name:'哈哈',
+			words:'哈哈哈哈哈哈！生日快乐，献给你！',
+			url:'images/5.jpg'
+		};
+    var data3={
+			name:'成龙',
+			words:'生日快乐，献给最亲爱的你！',
+			url:'images/4.jpg'
+		};    			
 	$('[data-blz-danmu]').sendWish(data);	
 	$('[data-blz-danmu]').sendWish(data1);
 	$('[data-blz-danmu]').sendWish(data2);
+    $('[data-blz-danmu]').sendWish(data4);
 	$('[data-blz-danmu]').sendWish(data3).danmuOpen();
 }(window.Zepto||window.jQuery);
 </script>
